@@ -1,0 +1,19 @@
+\begin{table*}[htbp]
+\centering
+\caption{As Table~\ref{tab:table_main}, growth-rate specification (robustness).}
+\label{tab:table_main_growth}
+\begin{tabular}{lccccccc}
+\toprule
+Method & MSE (TWh$^2$) & MAE (TWh) & MAPE (\%) & MASE & GM rel. MSE [95\% CI] & Beat pers. & $R^2_{OOS}$ \\
+\midrule
+Persistence ($\hat y_t = y_{t-1}$) & 2004.6 & 22.88 & 4.05 & 1.354 & 1.000 (reference) & 0/30 & 0.547 \\
+Random walk with drift & 2157.0 & 24.40 & 4.36 & 1.462 & 1.118 [1.081, 1.217] & 2/30 & 0.490 \\
+Local-only (Ridge) & 1985.1 & 22.82 & 4.10 & 1.375 & 1.008 [0.975, 1.053] & 11/30 & 0.550 \\
+Local-only, 10-year window & 1968.4 & 22.73 & 4.05 & 1.355 & 0.987 [0.978, 1.012] & 15/30 & 0.555 \\
+GTVMin FL (similarity graph) & 2006.5 & 22.96 & 4.11 & 1.375 & 1.011 [0.986, 1.045] & 10/30 & 0.544 \\
+Pooled, global scaling & 2359.8 & 24.60 & 4.26 & 1.442 & 1.121 [1.015, 1.274] & 5/30 & 0.478 \\
+Pooled, country fixed effects & 2374.4 & 25.40 & 4.45 & 1.509 & 1.190 [1.075, 1.405] & 4/30 & 0.443 \\
+Hierarchical (mixed effects) & 2418.8 & 24.95 & 4.42 & 1.492 & 1.179 [1.009, 1.334] & 3/30 & 0.463 \\
+\bottomrule
+\end{tabular}
+\end{table*}

@@ -1,0 +1,17 @@
+\begin{table*}[htbp]
+\centering
+\caption{Collaboration-graph comparison (30-country set, levels specification). Each graph is rebuilt at every origin from data up to that origin, except the full-history variant (diagnostic). $\lambda$ is selected per origin by inner validation. Rel.\ shift: $\|\theta_{FL}-\theta_{local}\|/\|\theta_{local}\|$. Floats sent: total parameters exchanged over all 17 origins. $p$: pooled test of the mean relative loss difference against the sparse similarity graph, standard errors clustered by year.}
+\label{tab:graphs}
+\begin{tabular}{lcccccccc}
+\toprule
+Graph & Edges & Density & Median $\lambda$ & Median rel. shift & MSE (TWh$^2$) & GM rel. MSE & Floats sent ($10^3$) & $p$ vs sparse \\
+\midrule
+Sparse similarity (per origin) & 230 & 0.528 & 0.1 & 0.223 & 2173.5 & 1.081 & 21384 & -- \\
+Sparse similarity (full history) & 233 & 0.536 & 0.1 & 0.241 & 2162.9 & 1.079 & 772 & 0.649 \\
+Complete, similarity weights & 435 & 1.000 & 0.1 & 0.288 & 2168.8 & 1.076 & 1573 & 0.373 \\
+Complete, equal weights & 435 & 1.000 & 0.01 & 0.263 & 2200.6 & 1.083 & 1308 & 0.975 \\
+Geographic regions & 341 & 0.784 & 0.1 & 0.273 & 2233.0 & 1.065 & 1255 & 0.043 \\
+Parameter $k$-NN & 63 & 0.145 & 1 & 0.210 & 2354.5 & 1.067 & 585 & 0.106 \\
+\bottomrule
+\end{tabular}
+\end{table*}

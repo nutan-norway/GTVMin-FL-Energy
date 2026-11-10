@@ -1,0 +1,19 @@
+Set,Method,MSE,Mean $R^2$ (test mean),GM rel. MSE,Median rel. shift
+paper18,"Local-only, submitted ($\alpha=5$)",263.51,0.243,1.161,--
+paper18,"FL, submitted (full-history graph)",263.47,0.243,1.160,0.00040
+paper18,"FL, submitted (per-origin graph)",263.48,0.243,1.161,0.00041
+paper18,"Pooled global scaling, submitted",489.83,-1.107,2.402,--
+paper18,"Pooled fixed effects, submitted",469.09,-0.854,2.390,--
+paper18,Local-only (Ridge),265.66,0.266,1.132,--
+paper18,GTVMin FL (similarity graph),259.60,0.275,1.129,0.21331
+paper18,"Pooled, global scaling",281.73,0.209,1.131,--
+paper18,"Pooled, country fixed effects",277.04,0.214,1.215,--
+europe,"Local-only, submitted ($\alpha=5$)",2287.69,0.236,1.138,--
+europe,"FL, submitted (full-history graph)",2287.36,0.236,1.138,0.00034
+europe,"FL, submitted (per-origin graph)",2287.35,0.236,1.138,0.00034
+europe,"Pooled global scaling, submitted",4412.38,-2.750,3.257,--
+europe,"Pooled fixed effects, submitted",4839.37,-0.935,2.440,--
+europe,Local-only (Ridge),2278.27,0.252,1.110,--
+europe,GTVMin FL (similarity graph),2173.49,0.267,1.081,0.22327
+europe,"Pooled, global scaling",2144.73,0.145,1.136,--
+europe,"Pooled, country fixed effects",2344.41,0.192,1.102,--

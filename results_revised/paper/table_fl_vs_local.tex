@@ -1,0 +1,15 @@
+\begin{table*}[htbp]
+\centering
+\caption{Federated (similarity graph) versus local-only forecasts. Mean relative difference: average over country-years of $(SE_{FL}-SE_{local})/\mathrm{MSE}_{local,c}$ (negative favours FL), standard errors clustered by forecast year. TOST: equivalence test with margin $\pm5\%$ of the local MSE. GM rel.\ MSE: geometric mean over countries of $\mathrm{MSE}_{FL}/\mathrm{MSE}_{local}$, moving-block bootstrap CI over years. Last column: countries with a significant Diebold--Mariano difference at 5\% (unadjusted).}
+\label{tab:fl_vs_local}
+\begin{tabular}{lcccccc}
+\toprule
+Setting & Mean rel. diff. & 90\% CI & $p$ (difference) & $p$ (TOST, $\pm 5\%$) & GM rel. MSE [95\% CI] & DM: FL / local better \\
+\midrule
+30 countries, growth & 0.004 & [-0.007, 0.015] & 0.511 & 0.000 & 1.003 [0.990, 1.014] & 1 / 2 \\
+30 countries, levels & -0.023 & [-0.054, 0.009] & 0.228 & 0.072 & 0.974 [0.942, 1.015] & 1 / 0 \\
+18 countries, growth & 0.007 & [0.001, 0.013] & 0.054 & 0.000 & 1.006 [0.998, 1.013] & 0 / 0 \\
+18 countries, levels & -0.000 & [-0.028, 0.028] & 0.987 & 0.003 & 0.997 [0.968, 1.030] & 0 / 0 \\
+\bottomrule
+\end{tabular}
+\end{table*}
