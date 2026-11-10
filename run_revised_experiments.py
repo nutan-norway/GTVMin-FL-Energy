@@ -1,5 +1,9 @@
+# Revised code for GTVMIN-FL Experiments
+# Author: Nutan Gupta, University of Inland Norway
+# Date: 10 November 2026
+
 """
-Runs every experiment of the revision and writes CSVs/figures to
+Runs every experiment and writes CSVs/figures to
 results_revised/. Usage:
 
     python run_revised_experiments.py

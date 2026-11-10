@@ -1,3 +1,7 @@
+# Revised code for GTVMIN-FL Heterogeneity Analysis
+# Author: Nutan Gupta, University of Inland Norway
+# Date: 10 November 2026
+
 """
 Quantitative characterization of national energy-system heterogeneity
 
@@ -12,7 +16,7 @@ Quantitative characterization of national energy-system heterogeneity
      degree and the distance of each country's local parameters from the
      cross-country mean.
 
-Run after run_revised_experiments.py. Writes results_revised/heterogeneity_*.csv.
+Run after run_revised_experiments.py.
 """
 
 import numpy as np

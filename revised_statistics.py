@@ -1,8 +1,11 @@
-"""
-Forecast-comparison statistics for the revision (R2, R4.8, R1.3).
+# Revised code for GTVMIN-FL Statistics
+# Author: Nutan Gupta, University of Inland Norway
+# Date: 10 November 2026
 
-Replaces the Wilcoxon/sign tests of the previous version (stastistical_test.py)
-with tests that account for (i) serial dependence of annual forecast errors
+"""
+Forecast-comparison statistics.
+
+Tests that account for (i) serial dependence of annual forecast errors
 and (ii) contemporaneous dependence across countries (common shocks such as
 2009 and 2020), and that distinguish "no significant difference" from
 "equivalence":

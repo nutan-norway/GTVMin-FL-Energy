@@ -1,5 +1,9 @@
+# Revised code for GTVMIN-FL (Tables and Figures)
+# Author: Nutan Gupta, University of Inland Norway
+# Date: 10 November 2026
+
 """
-Tables (LaTeX + CSV) and figures from results_revised/.
+Tables and figures from results_revised/.
 
 Main setting:     30-country Europe set, levels specification.
 Robustness:       growth specification; the submitted 18-country set.
@@ -353,7 +357,7 @@ def fig_network(origin=2021):
     region = {c: r for r, cs in REGIONS.items() for c in cs}
     region_color = dict(zip(REGIONS, [BLUE, ORANGE, AQUA, YELLOW, MAGENTA, GREEN]))
     # Stress-based layout: graph distances become drawing distances, which
-    # spreads the dense core instead of collapsing it as spring layouts do.
+    # spreads the dense core instead of collapsing.
     pos = nx.kamada_kawai_layout(G, weight=None)
     fig, ax = plt.subplots(figsize=(7.16, 5.2))
     normal = [(u, v) for u, v, d in G.edges(data=True) if not d.get('fallback')]

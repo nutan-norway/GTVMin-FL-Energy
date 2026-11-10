@@ -1,3 +1,7 @@
+# Revised code for GTVMIN-FL
+# Author: Nutan Gupta, University of Inland Norway
+# Date: 10 November 2026
+
 import warnings
 
 import networkx as nx
