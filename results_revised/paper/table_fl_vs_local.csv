@@ -1,5 +1,14 @@
-Setting,Mean rel. diff.,90\% CI,$p$ (difference),"$p$ (TOST, $\pm 5\%$)",GM rel. MSE [95\% CI],DM: FL / local better
-"30 countries, growth",0.004,"[-0.007, 0.015]",0.511,0.000,"1.003 [0.990, 1.014]",1 / 2
+Setting,Mean rel. diff.,90\% CI,$p$ (difference),"$p$ (TOST, $\pm 5\%$)",GM rel. MSE [95\% CI],DM: FL / B better
+\multicolumn{7}{l}{\emph{B = local-only}},,,,,,
 "30 countries, levels",-0.023,"[-0.054, 0.009]",0.228,0.072,"0.974 [0.942, 1.015]",1 / 0
-"18 countries, growth",0.007,"[0.001, 0.013]",0.054,0.000,"1.006 [0.998, 1.013]",0 / 0
+"30 countries, growth",0.004,"[-0.007, 0.015]",0.511,0.000,"1.003 [0.990, 1.014]",1 / 2
 "18 countries, levels",-0.000,"[-0.028, 0.028]",0.987,0.003,"0.997 [0.968, 1.030]",0 / 0
+"18 countries, growth",0.007,"[0.001, 0.013]",0.054,0.000,"1.006 [0.998, 1.013]",0 / 0
+\multicolumn{7}{l}{\emph{B = hierarchical (mixed effects)}},,,,,,
+"30 countries, levels",0.039,"[-0.075, 0.152]",0.561,0.432,"1.019 [0.924, 1.222]",0 / 1
+"30 countries, growth",-0.124,"[-0.233, -0.015]",0.064,0.874,"0.859 [0.770, 0.992]",7 / 0
+"18 countries, levels",0.042,"[-0.066, 0.149]",0.508,0.447,"1.006 [0.901, 1.113]",1 / 1
+"18 countries, growth",-0.099,"[-0.168, -0.031]",0.023,0.886,"0.868 [0.802, 0.973]",2 / 0
+"\multicolumn{7}{l}{\emph{B = pooled, per-country scaling (levels only)}}",,,,,,
+"30 countries, levels",0.028,"[-0.077, 0.133]",0.650,0.359,"1.002 [0.926, 1.132]",1 / 1
+"18 countries, levels",0.029,"[-0.077, 0.135]",0.635,0.369,"0.997 [0.894, 1.091]",1 / 0

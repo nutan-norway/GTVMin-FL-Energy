@@ -1,6 +1,6 @@
 # Revised code for GTVMIN-FL Statistics
 # Author: Nutan Gupta, University of Inland Norway
-# Date: 10 November 2026
+# Date: 18 November 2026
 
 """
 Forecast-comparison statistics.
@@ -44,6 +44,12 @@ PAIRS = [('FL_similarity', 'Local'), ('FL_similarity', 'Persistence'),
          ('Pooled_LocalScale', 'Local'), ('Pooled_GlobalScale', 'Local'),
          ('FLorig_FixedGraph', 'Localorig'),
          ('FLorig_OriginGraph', 'FLorig_FixedGraph')]
+# FL versus the centralized baselines (Table II, lower panels). These use a
+# separate random stream so that adding them leaves the bootstrap CIs of the
+# comparisons above unchanged.
+EXTRA_PAIRS = [('FL_similarity', 'Hierarchical'),
+               ('FL_similarity', 'Pooled_LocalScale'),
+               ('FL_similarity', 'Pooled_GlobalScale')]
 GRAPH_METHODS = ['FL_similarity', 'FL_similarity_fullhistory',
                  'FL_complete_similarity', 'FL_complete_equal',
                  'FL_geographic', 'FL_param_knn']

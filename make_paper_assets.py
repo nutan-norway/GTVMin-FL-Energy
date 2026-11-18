@@ -1,6 +1,6 @@
 # Revised code for GTVMIN-FL (Tables and Figures)
 # Author: Nutan Gupta, University of Inland Norway
-# Date: 10 November 2026
+# Date: 18 November 2026
 
 """
 Tables and figures from results_revised/.
@@ -17,6 +17,8 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import networkx as nx
+import re
+
 import numpy as np
 import pandas as pd
 
@@ -90,6 +92,11 @@ def to_latex(df, path, caption, label, col_format=None):
                       caption=caption, label=label, position='htbp')
     tex = tex.replace('\\begin{table}[htbp]', '\\begin{table*}[htbp]\n\\centering')
     tex = tex.replace('\\end{table}', '\\end{table*}')
+    # panel headers spanning the full width: drop the empty cells pandas
+    # appends, and separate later panels with a rule
+    tex = re.sub(r'(\\multicolumn\{\d+\}\{l\}\{.*?\}\})(\s*&)+\s*\\\\',
+                 r'\1 \\\\', tex)
+    tex = re.sub(r'\\\\\n(\\multicolumn)', '\\\\\\\\\n\\\\midrule\n\\1', tex)
     with open(path, 'w') as f:
         f.write(tex)
 
@@ -199,28 +206,42 @@ def table_graphs(overall, gstats, diag, pooled):
 
 
 def table_fl_vs_local(pooled):
-    p = pooled[(pooled['A'] == 'FL_similarity') & (pooled['B'] == 'Local')].copy()
-    p['Setting'] = p['CountrySet'].map({'europe': '30 countries', 'paper18': '18 countries'}) \
-        + ', ' + p['Spec']
-    df = pd.DataFrame({
-        'Setting': p['Setting'],
-        'Mean rel. diff.': p['MeanRelDiff'].map(fmt),
-        '90\\% CI': [f'[{a:.3f}, {b:.3f}]' for a, b in zip(p['CI90_low'], p['CI90_high'])],
-        '$p$ (difference)': p['p_diff'].map(fmt),
-        '$p$ (TOST, $\\pm 5\\%$)': p['p_TOST'].map(fmt),
-        'GM rel. MSE [95\\% CI]': [f'{g:.3f} [{a:.3f}, {b:.3f}]' for g, a, b in
-                                   zip(p['GM_RelMSE'], p['GM_CI95_low'], p['GM_CI95_high'])],
-        'DM: FL / local better': [f'{a} / {b}' for a, b in
-                                  zip(p['N_A_better_DM05'], p['N_B_better_DM05'])],
-    })
+    """Table II: FL against local-only (all settings) and against the
+    centralized hierarchical and per-country-scaled pooled models."""
+    blocks = [('Local', 'B = local-only'),
+              ('Hierarchical', 'B = hierarchical (mixed effects)'),
+              ('Pooled_LocalScale', 'B = pooled, per-country scaling (levels only)')]
+    order = [('europe', 'levels'), ('europe', 'growth'),
+             ('paper18', 'levels'), ('paper18', 'growth')]
+    rows = []
+    for bench, label in blocks:
+        p = pooled[(pooled['A'] == 'FL_similarity') & (pooled['B'] == bench)]
+        p = p.set_index(['CountrySet', 'Spec'])
+        rows.append({'Setting': f'\\multicolumn{{7}}{{l}}{{\\emph{{{label}}}}}'})
+        for cset, spec in order:
+            if (cset, spec) not in p.index:
+                continue
+            r = p.loc[(cset, spec)]
+            n = '30' if cset == 'europe' else '18'
+            rows.append({
+                'Setting': f'{n} countries, {spec}',
+                'Mean rel. diff.': fmt(r['MeanRelDiff']),
+                '90\\% CI': f"[{r['CI90_low']:.3f}, {r['CI90_high']:.3f}]",
+                '$p$ (difference)': fmt(r['p_diff']),
+                '$p$ (TOST, $\\pm 5\\%$)': fmt(r['p_TOST']),
+                'GM rel. MSE [95\\% CI]': f"{r['GM_RelMSE']:.3f} "
+                                          f"[{r['GM_CI95_low']:.3f}, {r['GM_CI95_high']:.3f}]",
+                'DM: FL / B better': f"{int(r['N_A_better_DM05'])} / {int(r['N_B_better_DM05'])}",
+            })
+    df = pd.DataFrame(rows).fillna('')
     df.to_csv(f'{OUT}/table_fl_vs_local.csv', index=False)
     to_latex(df, f'{OUT}/table_fl_vs_local.tex',
-             'Federated (similarity graph) versus local-only forecasts. Mean relative '
-             'difference: average over country-years of '
-             '$(SE_{FL}-SE_{local})/\\mathrm{MSE}_{local,c}$ (negative favours FL), '
-             'standard errors clustered by forecast year. TOST: equivalence test with '
-             'margin $\\pm5\\%$ of the local MSE. GM rel.\\ MSE: geometric mean over '
-             'countries of $\\mathrm{MSE}_{FL}/\\mathrm{MSE}_{local}$, moving-block '
+             'FL (sparse similarity graph) versus local-only, hierarchical and pooled '
+             '(per-country scaling) forecasts B. Mean relative difference: average over '
+             'country-years of $(SE_{FL}-SE_{B})/\\mathrm{MSE}_{B,c}$ (negative favours '
+             'FL), standard errors clustered by forecast year. TOST: equivalence test '
+             'with margin $\\pm5\\%$ of the MSE of B. GM rel.\\ MSE: geometric mean '
+             'over countries of $\\mathrm{MSE}_{FL}/\\mathrm{MSE}_{B}$, moving-block '
              'bootstrap CI over years. Last column: countries with a significant '
              'Diebold--Mariano difference at 5\\% (unadjusted).',
              'tab:fl_vs_local', 'lcccccc')
@@ -228,7 +249,7 @@ def table_fl_vs_local(pooled):
 
 def table_robustness(overall):
     methods = ['Local', 'FL_similarity', 'FL_geographic', 'Pooled_GlobalScale',
-               'Pooled_FE', 'Hierarchical', 'Local_RW10', 'Drift']
+               'Pooled_LocalScale', 'Pooled_FE', 'Hierarchical', 'Local_RW10', 'Drift']
     settings = [('europe', 'levels'), ('europe', 'growth'),
                 ('paper18', 'levels'), ('paper18', 'growth')]
     o = overall.set_index(['CountrySet', 'Spec', 'Method'])
@@ -237,6 +258,11 @@ def table_robustness(overall):
         row = {'Method': METHOD_LABELS.get(m, GRAPH_LABELS.get(m, m))}
         for cset, spec in settings:
             n = 30 if cset == 'europe' else 18
+            if (cset, spec, m) not in o.index:
+                # growth: no per-country scaling, so this model coincides
+                # with pooled, global scaling and is not run separately
+                row[f'{n}, {spec}'] = '--'
+                continue
             r = o.loc[(cset, spec, m)]
             row[f'{n}, {spec}'] = (f"{r['GM_RelMSE']:.3f} "
                                    f"({int(r['N_beat_persistence'])}/{n})")
@@ -247,7 +273,9 @@ def table_robustness(overall):
              'Robustness across specifications and country sets: geometric-mean '
              'MSE relative to persistence (below 1 beats persistence) and, in '
              'parentheses, the number of countries in which the method beats '
-             'persistence.', 'tab:robustness', 'lcccc')
+             'persistence. --: in the growth specification no per-country scaling '
+             'is applied, so this model coincides with pooled, global scaling.',
+             'tab:robustness', 'lcccc')
 
 
 def table_submitted_vs_revised(overall, diag):
@@ -357,7 +385,7 @@ def fig_network(origin=2021):
     region = {c: r for r, cs in REGIONS.items() for c in cs}
     region_color = dict(zip(REGIONS, [BLUE, ORANGE, AQUA, YELLOW, MAGENTA, GREEN]))
     # Stress-based layout: graph distances become drawing distances, which
-    # spreads the dense core instead of collapsing.
+    # spreads the dense core instead of collapsing it as spring layouts do.
     pos = nx.kamada_kawai_layout(G, weight=None)
     fig, ax = plt.subplots(figsize=(7.16, 5.2))
     normal = [(u, v) for u, v, d in G.edges(data=True) if not d.get('fallback')]
